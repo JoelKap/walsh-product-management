@@ -7,6 +7,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductAddUpdateComponent } from './product-add-update/product-add-update.component';
 import { ProductTrashComponent } from './product-trash/product-trash.component';
+import { ProductGlobalSearchComponent } from './product-global-search/product-global-search.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ProductTrashComponent } from './product-trash/product-trash.component';
     ProductListComponent,
     ProductDetailComponent,
     ProductAddUpdateComponent,
-    ProductTrashComponent
+    ProductTrashComponent,
+    ProductGlobalSearchComponent
   ],
   imports: [
     BrowserModule,
