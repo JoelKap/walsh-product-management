@@ -5,6 +5,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductTrashComponent } from './product-trash/product-trash.component';
 
+// The reason why I didn't choose lazy loading is because this is a fairly small application,
+// otherwise, it would have made sense to choose it.
 const routes: Routes = [
   {
     path: "",
