@@ -1,1 +1,10 @@
-<p>product works!</p>
+<div class="card" style="width: 20rem;">
+    <img [src]="product.productImageUrl" class="card-img-top" alt="product.productTitle">
+    <div class="card-body">
+        <h5 class="card-title">{{product.productTitle}}</h5>
+        <p class="card-text">{{product.productDescription.substring(0, 80)}}...</p>
+        <a href="#">
+            <fa-icon [icon]="faThumbsUp"></fa-icon>
+        </a>
+    </div>
+</div>

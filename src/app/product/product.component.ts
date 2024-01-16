@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+
+import { ProductViewModel } from '../viewModel/product.viewmodel';
 
 @Component({
   selector: 'app-product',
@@ -6,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
-
+  faThumbsUp = faThumbsUp;
+  
+  @Input() product!: ProductViewModel;
 }
