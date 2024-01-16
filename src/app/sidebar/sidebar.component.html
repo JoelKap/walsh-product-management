@@ -1,1 +1,26 @@
-<p>sidebar works!</p>
+<div class="sidebar" [ngClass]="{ 'expanded': isExpanded }">
+    <div class="header">
+      <h1 class="title">
+       Walsh
+      </h1>
+      <div class="toggle" (click)="handleSidebarToggle()">
+        <span class="chevron"></span>
+      </div>
+    </div>
+    <div class="content">
+      <div class="link">
+        <div class="content" [routerLink]="['/product-list']" [routerLinkActive]="'active'">
+          <div class="icon">
+          </div>
+          <div class="title">Products</div>
+        </div>
+      </div>
+      <div class="link">
+        <div class="content" [routerLink]="['/trash']" [routerLinkActive]="'active'">
+          <div class="icon">
+          </div>
+          <div class="title">Trash</div>
+        </div>
+      </div>
+    </div>
+  </div>
