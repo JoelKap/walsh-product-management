@@ -9,6 +9,7 @@ import { ProductAddUpdateComponent } from './product-add-update/product-add-upda
 import { ProductTrashComponent } from './product-trash/product-trash.component';
 import { ProductGlobalSearchComponent } from './product-global-search/product-global-search.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ProductAddUpdateComponent,
     ProductTrashComponent,
     ProductGlobalSearchComponent,
-    SidebarComponent
+    SidebarComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
