@@ -29,4 +29,9 @@ export class ProductGateway {
         const url = `${this.apiUrl}`;
         return this.http.put<ProductViewModel>(url, product);
     }
+
+    searchProducts(term: string): Observable<ProductViewModel[]> {
+        const url = `${this.apiUrl}/searchProducts?searchStr=${term}`;
+        return this.http.get<ProductViewModel[]>(url);
+    }
 }

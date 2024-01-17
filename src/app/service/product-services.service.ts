@@ -8,7 +8,7 @@ import { ProductGateway } from '../gateways/product.gateways';
   providedIn: 'root'
 })
 export class ProductService {
-  products: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
+  private products: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
 
   constructor(private productGateway: ProductGateway) { }
 
@@ -56,5 +56,35 @@ export class ProductService {
     } else {
       return this.productGateway.addProduct(product);
     }
+  }
+
+  searchProducts(term: string) {
+    const cachedProducts = this.products.value.filter(product =>
+      this.productMatchesSearchTerm(product, term)
+    );
+    
+    cachedProducts.length = 0;
+    if (cachedProducts.length > 0) {
+      return of(cachedProducts);
+    } else {
+      return this.productGateway.searchProducts(term).pipe(
+        tap((products: ProductViewModel[]) => {
+          this.products.next([...this.products.value, ...products]);
+        }),
+        catchError(error => {
+          console.error('Error searching products', error);
+          return of([]);
+        })
+      );
+    }
+  }
+
+  private productMatchesSearchTerm(product: ProductViewModel, term: string): boolean {
+    return (
+      product.productTitle.toLowerCase().includes(term.toLowerCase()) ||
+      product.productDescription.toLowerCase().includes(term.toLowerCase()) ||
+      product.productRating?.toString() === term ||
+      product.productPrice.toString() == term
+    );
   }
 }

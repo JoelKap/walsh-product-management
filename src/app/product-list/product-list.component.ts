@@ -13,13 +13,28 @@ export class ProductListComponent implements OnInit {
   products: ProductViewModel[] = [];
 
   constructor(private router: Router,
-              private productService: ProductService) { }
+    private productService: ProductService) { }
 
   ngOnInit() {
-    this.productService.getProducts().subscribe(products => this.products = products);
+    this.loadProducts();
   }
 
   viewProduct(id: number) {
     this.router.navigate(['/detail', id]);
+  }
+
+  searchProducts(value: any) {
+    const term = value.data;
+    if (value !== null && value.trim() !== '') {
+      this.productService.searchProducts(term).subscribe((searchResults) => {
+        this.products = searchResults;
+      });
+    } else {
+      this.loadProducts();
+    }
+  }
+
+  private loadProducts() {
+    this.productService.getProducts().subscribe((products) => (this.products = products));
   }
 }
