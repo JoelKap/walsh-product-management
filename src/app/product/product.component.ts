@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 
@@ -10,18 +11,19 @@ import { ProductViewModel } from '../viewModel/product.viewmodel';
 })
 export class ProductComponent {
   faThumbsUp = faThumbsUp;
-  
   @Input() product!: ProductViewModel;
 
-  viewProductDetails(id: number){
+  constructor(private router: Router){
 
+  }
+
+  viewProductDetails(id: number){
+    this.router.navigate(['/detail', id]);
   }
 
   likeProduct(id: number){
-
   }
 
   removeProduct(id: number){
-    
   }
 }
