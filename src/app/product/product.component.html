@@ -3,8 +3,16 @@
     <div class="card-body">
         <h5 class="card-title">{{product.productTitle}}</h5>
         <p class="card-text">{{product.productDescription.substring(0, 80)}}...</p>
-        <a href="#">
-            <fa-icon [icon]="faThumbsUp"></fa-icon>
-        </a>
+        <div class="row">
+            <div class="col-md-8">
+                <a href="#">
+                    <fa-icon [icon]="faThumbsUp"></fa-icon>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <label>in stock:</label>
+                <small class="ms-1">{{ product.productInStock }}</small>
+            </div>
+        </div>
     </div>
 </div>
