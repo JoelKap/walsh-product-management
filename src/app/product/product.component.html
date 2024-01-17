@@ -15,4 +15,18 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="float-end">
+                    <button class="btn btn-sm btn-outline-primary"
+                        (click)="viewProductDetails(product.productId)">View</button>
+                </div>
+                <div class="float-start">
+                    <button class="btn btn-sm btn-outline-danger"
+                        (click)="removeProduct(product.productId)">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

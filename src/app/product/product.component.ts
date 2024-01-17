@@ -12,4 +12,16 @@ export class ProductComponent {
   faThumbsUp = faThumbsUp;
   
   @Input() product!: ProductViewModel;
+
+  viewProductDetails(id: number){
+
+  }
+
+  likeProduct(id: number){
+
+  }
+
+  removeProduct(id: number){
+    
+  }
 }
