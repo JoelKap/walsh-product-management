@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, map, of, tap } from 'rxjs';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 import { ProductGateway } from '../gateways/product.gateways';
@@ -24,6 +24,27 @@ export class ProductService {
           //Todo:Need to load a notification
           //console.error('Error loading products', error);
           return of([]);
+        })
+      );
+    }
+  }
+
+  getProductById(id: string): Observable<ProductViewModel | null> {
+    const productId = Number(id);
+    const cachedProduct = this.products.value.find(product => product.productId === productId);
+    
+    if (cachedProduct) {
+      return of(cachedProduct);
+    } else {
+      return this.productGateway.getProductById(productId).pipe(
+        filter((product: ProductViewModel | null): product is ProductViewModel => product !== null),
+        tap((product: ProductViewModel) => {
+          this.products.next([...this.products.value, product]);
+        }),
+        catchError((error) => {
+          // Todo: Handle error, e.g., show notification
+          console.error(`Error loading product with productId ${productId}`, error);
+          return of(null);
         })
       );
     }

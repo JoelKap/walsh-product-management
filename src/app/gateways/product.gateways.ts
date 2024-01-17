@@ -12,8 +12,12 @@ export class ProductGateway {
 
     constructor(private http: HttpClient) { }
 
-
     getProducts(): Observable<ProductViewModel[]> {
         return this.http.get<ProductViewModel[]>(this.apiUrl);
+    }
+
+    getProductById(productId: number): Observable<ProductViewModel> {
+        const url = `${this.apiUrl}/${productId}`;
+        return this.http.get<ProductViewModel>(url);
     }
 }

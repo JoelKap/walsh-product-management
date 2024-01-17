@@ -1,0 +1,29 @@
+.product-details-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+}
+
+.center-container {
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+}
+
+.product-image-container {
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.product-content-container {
+    flex-grow: 1;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+}

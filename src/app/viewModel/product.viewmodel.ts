@@ -1,3 +1,5 @@
+import { ProductCategoryViewModel } from "./product-category.viewmodel";
+
 export class ProductViewModel {
     productId!: number;
     productTitle!: string;
@@ -5,7 +7,7 @@ export class ProductViewModel {
     productRating?: string;
     productReview?: string;
     productLocation!: string;
-    productCategory!: string;
+    productCategory!: ProductCategoryViewModel;
     productImageUrl? : string;
     productDescription!: string;
     productLike: boolean = false;
