@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, filter, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, of, tap } from 'rxjs';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 import { ProductGateway } from '../gateways/product.gateways';
@@ -32,7 +32,7 @@ export class ProductService {
   getProductById(id: string): Observable<ProductViewModel | null> {
     const productId = Number(id);
     const cachedProduct = this.products.value.find(product => product.productId === productId);
-    
+
     if (cachedProduct) {
       return of(cachedProduct);
     } else {
@@ -47,6 +47,14 @@ export class ProductService {
           return of(null);
         })
       );
+    }
+  }
+
+  addOrUpdateProduct(product: ProductViewModel) {
+    if (product.productId) {
+      return this.productGateway.updateProduct(product);
+    } else {
+      return this.productGateway.addProduct(product);
     }
   }
 }

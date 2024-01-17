@@ -1,13 +1,12 @@
-import { ProductCategoryViewModel } from "./product-category.viewmodel";
-
 export class ProductViewModel {
     productId!: number;
+    categoryId!: number;
+    locationId!: number;
     productTitle!: string;
     productPrice!: number;
     productRating?: string;
     productReview?: string;
-    productLocation!: string;
-    productCategory!: ProductCategoryViewModel;
+    productInStock!: string;
     productImageUrl? : string;
     productDescription!: string;
     productLike: boolean = false;
