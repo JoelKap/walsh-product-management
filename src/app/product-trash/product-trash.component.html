@@ -1,1 +1,27 @@
-<p>product-trash works!</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let product of trashProducts$ | async">
+            <div class="card bg-light text-white">
+                <img [src]="product.productImageUrl" class="card-img" alt="{{ product.productTitle }}">
+                <div class="ms-2">
+                    <h5 class="card-title" style="color: black;">
+                        {{ product.productTitle }}</h5>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="float-end">
+                                <button class="btn btn-sm btn-outline-danger" type="button"
+                                    (click)="removeProduct(product.productId)">Remove</button>
+                            </div>
+                            <div class="float-start">
+                                <button class="btn btn-sm btn-outline-primary" type="button"
+                                    (click)="restoreProduct(product)">Restore</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

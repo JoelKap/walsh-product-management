@@ -9,6 +9,7 @@ import { ProductGateway } from '../gateways/product.gateways';
 })
 export class ProductService {
   private products: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
+  trashProducts: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
 
   constructor(private productGateway: ProductGateway) { }
 
@@ -106,6 +107,45 @@ export class ProductService {
       })
     );
   }
+
+  getTrashProducts() {
+    if (this.trashProducts.value.length) {
+      return of(this.trashProducts.value)
+    } else {
+      return this.productGateway.getTrashProducts().pipe(
+        tap((trashProducts: ProductViewModel[]) => {
+          this.trashProducts.next([...this.trashProducts.value, ...trashProducts]);
+        }),
+        catchError(error => {
+          //Todo:Need to load a notification
+          //console.error('Error loading products', error);
+          return of([]);
+        })
+      );
+    }
+  }
+
+  restoreTrashProduct(model: ProductViewModel) {
+    return this.productGateway.restoreTrashProduct(model).pipe(
+      tap((result: boolean) => {
+        if (result) {
+          const cachedProductIndex = this.trashProducts.value.findIndex(product => product.productId === model.productId);
+          if (cachedProductIndex !== -1) {
+            const updatedTrashProducts = [
+              ...this.trashProducts.value.slice(0, cachedProductIndex),
+              ...this.trashProducts.value.slice(cachedProductIndex + 1)
+            ];
+            this.trashProducts.next(updatedTrashProducts);
+          }
+        }
+      }),
+      catchError((error) => {
+        console.error(`Error restoring product with productId`, error);
+        return of(false);
+      })
+    );
+  }
+
 
   private productMatchesSearchTerm(product: ProductViewModel, term: string): boolean {
     return (

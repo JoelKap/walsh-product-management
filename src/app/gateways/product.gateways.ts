@@ -9,6 +9,7 @@ import { ProductViewModel } from '../viewModel/product.viewmodel';
 })
 export class ProductGateway {
     private apiUrl = 'https://localhost:7183/api/Product';
+    private trashApiUrl = 'https://localhost:7183/api/Trash';
 
     constructor(private http: HttpClient) { }
 
@@ -49,5 +50,14 @@ export class ProductGateway {
                 return of(false);
             })
         );
+    }
+
+    getTrashProducts() {
+        return this.http.get<ProductViewModel[]>(this.trashApiUrl);
+    }
+
+    restoreTrashProduct(product: ProductViewModel): Observable<boolean> {
+        const url = `${this.trashApiUrl}/RestoreProduct`;
+        return this.http.put<boolean>(url, product);
     }
 }
