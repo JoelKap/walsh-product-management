@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, filter, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, of, switchMap, tap } from 'rxjs';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 import { ProductGateway } from '../gateways/product.gateways';
@@ -88,6 +88,21 @@ export class ProductService {
         // Todo: Handle error, e.g., show notification
         console.error(`Error loading product with productId`, error);
         return of(null);
+      })
+    );
+  }
+
+  removeProduct(id: number): Observable<boolean> {
+    const cachedProductIndex = this.products.value.findIndex(product => product.productId === id);
+
+    if (cachedProductIndex !== -1) {
+      this.products.value.splice(cachedProductIndex, 1);
+    }
+
+    return this.productGateway.removeProduct(id).pipe(
+      switchMap(() => of(true)),
+      catchError(() => {
+        return of(false);
       })
     );
   }

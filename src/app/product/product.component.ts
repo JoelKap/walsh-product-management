@@ -32,5 +32,6 @@ export class ProductComponent {
   }
 
   removeProduct(id: number) {
+    this.productService.removeProduct(id).subscribe(() => {});
   }
 }

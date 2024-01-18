@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 
@@ -38,5 +38,16 @@ export class ProductGateway {
     likeOrUnlineProduct(product: ProductViewModel): Observable<ProductViewModel> {
         const url = `${this.apiUrl}/LikeOrUnlikeProduct`;
         return this.http.put<ProductViewModel>(url, product);
+    }
+
+    removeProduct(productId: number): Observable<boolean> {
+        const url = `${this.apiUrl}/${productId}`;
+        return this.http.delete(url).pipe(
+            map(() => true), // Map the successful response to true
+            catchError(() => {
+                // Handle errors if needed
+                return of(false);
+            })
+        );
     }
 }
