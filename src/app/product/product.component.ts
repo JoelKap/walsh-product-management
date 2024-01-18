@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 import { ProductService } from '../service/product-services.service';
+import { ConfirmationModalComponent } from '../utils/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-product',
@@ -15,6 +17,7 @@ export class ProductComponent {
   @Input() product!: ProductViewModel;
 
   constructor(private router: Router,
+    private modalService: NgbModal,
     private productService: ProductService) {
 
   }
@@ -32,6 +35,16 @@ export class ProductComponent {
   }
 
   removeProduct(id: number) {
-    this.productService.removeProduct(id).subscribe(() => {});
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      size: 'md'
+    });
+
+    modalRef.componentInstance.modalData  = {message: 'delete', value: id};
+    modalRef.componentInstance.saveChanges.subscribe((id: number) => {
+      this.productService.removeProduct(id).subscribe(() => { });
+    });
+
+
+   
   }
 }
