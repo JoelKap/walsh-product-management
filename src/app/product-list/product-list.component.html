@@ -9,7 +9,7 @@
       </div>
       <div class="row" style="padding-top: 40px;">
         <div class="col-md-4 mb-4" *ngFor="let product of products">
-          <app-product [product]="product" (click)="viewProduct(product.productId)"></app-product>
+          <app-product [product]="product"></app-product>
         </div>
       </div>
     </main>

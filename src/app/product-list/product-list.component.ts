@@ -19,10 +19,6 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
   }
 
-  viewProduct(id: number) {
-    this.router.navigate(['/detail', id]);
-  }
-
   searchProducts(value: any) {
     const term = value.data;
     if (value !== null && value.trim() !== '') {
