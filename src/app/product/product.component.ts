@@ -3,6 +3,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
+import { ProductService } from '../service/product-services.service';
 
 @Component({
   selector: 'app-product',
@@ -13,17 +14,23 @@ export class ProductComponent {
   faThumbsUp = faThumbsUp;
   @Input() product!: ProductViewModel;
 
-  constructor(private router: Router){
+  constructor(private router: Router,
+    private productService: ProductService) {
 
   }
 
-  viewProductDetails(id: number){
+  viewProductDetails(id: number) {
     this.router.navigate(['/detail', id]);
   }
 
-  likeProduct(id: number){
+  likeOrUnlikeProduct(product: ProductViewModel) {
+    product.productLike = !product.productLike;
+
+    this.productService.likeOrUnlikeProduct(product).subscribe((result) => {
+      product.productLike = !result?.productLike;
+    })
   }
 
-  removeProduct(id: number){
+  removeProduct(id: number) {
   }
 }

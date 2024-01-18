@@ -62,7 +62,7 @@ export class ProductService {
     const cachedProducts = this.products.value.filter(product =>
       this.productMatchesSearchTerm(product, term)
     );
-    
+
     cachedProducts.length = 0;
     if (cachedProducts.length > 0) {
       return of(cachedProducts);
@@ -77,6 +77,19 @@ export class ProductService {
         })
       );
     }
+  }
+
+  likeOrUnlikeProduct(product: ProductViewModel): Observable<ProductViewModel | null> {
+    return this.productGateway.likeOrUnlineProduct(product).pipe(
+      tap((product: ProductViewModel) => {
+        this.products.next([...this.products.value, product]);
+      }),
+      catchError((error) => {
+        // Todo: Handle error, e.g., show notification
+        console.error(`Error loading product with productId`, error);
+        return of(null);
+      })
+    );
   }
 
   private productMatchesSearchTerm(product: ProductViewModel, term: string): boolean {
