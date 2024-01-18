@@ -43,8 +43,5 @@ export class ProductComponent {
     modalRef.componentInstance.saveChanges.subscribe((id: number) => {
       this.productService.removeProduct(id).subscribe(() => { });
     });
-
-
-   
   }
 }
