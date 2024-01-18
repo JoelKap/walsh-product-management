@@ -1,30 +1,37 @@
-<div class="card" style="width: 20rem;">
-    <img [src]="product.productImageUrl" class="card-img-top" alt="product.productTitle">
-    <div class="card-body">
-        <h5 class="card-title">{{product.productTitle}}</h5>
-        <p class="card-text">{{product.productDescription.substring(0, 80)}}...</p>
-        <div class="row">
-            <div class="col-md-7">
-                <a href="#" (click)="likeOrUnlikeProduct(product)">
-                    <fa-icon [icon]="faThumbsUp" [ngClass]="{'liked': !product.productLike}"></fa-icon>
-                </a>
-            </div>
-            <div class="col-md-5">
-                <label>in stock:</label>
-                <small class="ms-1">{{ product.productInStock }}</small>
-            </div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="float-end">
-                    <button class="btn btn-sm btn-outline-primary"
-                        (click)="viewProductDetails(product.productId)">View</button>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12 mb-12">
+            <div class="card">
+                <img [src]="product.productImageUrl" class="card-img" alt="{{ product.productTitle }}">
+                <p class="card-text p-2">{{product.productDescription.substring(0, 80)}}...</p>
+                <div class="p-2 text-center">
+                    <h5 class="card-title" style="color: black;">
+                        {{ product.productTitle }}</h5>
                 </div>
-                <div class="float-start">
-                    <button class="btn btn-sm btn-outline-danger"
-                        (click)="removeProduct(product.productId)">Remove</button>
+                <div class="row p-2">
+                    <div class="col-md-7">
+                        <a href="#" (click)="likeOrUnlikeProduct(product)">
+                            <fa-icon [icon]="faThumbsUp" [ngClass]="{'liked': !product.productLike}"></fa-icon>
+                        </a>
+                    </div>
+                    <div class="col-md-5">
+                        <label style="padding-left: 45px;">in stock:</label>
+                        <small class="ms-1">{{ product.productInStock }}</small>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="float-end">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    (click)="viewProductDetails(product.productId)">View</button>
+                            </div>
+                            <div class="float-start">
+                                <button class="btn btn-sm btn-outline-danger"
+                                    (click)="removeProduct(product.productId)">Remove</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

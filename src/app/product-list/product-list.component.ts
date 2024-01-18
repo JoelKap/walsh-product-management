@@ -18,8 +18,8 @@ export class ProductListComponent implements OnInit {
   }
 
   searchProducts(value: any) {
-    const term = value.data;
-    if (value !== null && value.trim() !== '') {
+    if (value.data) {
+      const term = value.data.trim();
       this.productService.searchProducts(term).subscribe((searchResults) => {
         this.products = searchResults;
       });
@@ -27,6 +27,7 @@ export class ProductListComponent implements OnInit {
       this.loadProducts();
     }
   }
+
 
   private loadProducts() {
     this.productService.getProducts().subscribe((products) => (this.products = products));
