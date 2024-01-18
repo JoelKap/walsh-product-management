@@ -46,15 +46,17 @@ export class ProductDetailComponent implements OnInit {
     });
 
     if (action !== 'add') {
-      modalRef.componentInstance.product = this.product;
+      modalRef.componentInstance.modalData = { message: 'Update', product: this.product };
     } else {
-      modalRef.componentInstance.product = new ProductViewModel();
-      modalRef.componentInstance.product.productId = 0;
-      modalRef.componentInstance.product.productReview = '';
+      const newProduct = new ProductViewModel();
+      newProduct.productId = 0;
+      newProduct.productReview = '';
+      newProduct.productInStock = "IN";
+      modalRef.componentInstance.modalData = { message: 'Add', product: newProduct };
     }
 
     modalRef.componentInstance.saveChanges.subscribe((product: ProductViewModel) => {
-      this.productService.addOrUpdateProduct(product).subscribe(() => {});
+      this.productService.addOrUpdateProduct(product).subscribe(() => { });
     });
   }
 
@@ -70,7 +72,7 @@ export class ProductDetailComponent implements OnInit {
     })
   }
 
-  private getLocations(){
+  private getLocations() {
     this.locationService.getLocations().subscribe((locations: ProductLocationViewModel[]) => {
       if (locations.length) {
         this.locationName = locations.find(location => location.locationId === this.product?.locationId)?.locationName;

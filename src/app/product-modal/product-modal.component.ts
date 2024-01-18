@@ -15,7 +15,7 @@ import { ProductLocationViewModel } from '../viewModel/product-location.viewmode
   styleUrls: ['./product-modal.component.css']
 })
 export class ProductModalComponent implements OnInit {
-  @Input() product!: ProductViewModel;
+  @Input() modalData!: any;
   @Input() title: string = '';
 
   @Output() saveChanges = new EventEmitter<ProductViewModel>();
@@ -42,10 +42,10 @@ export class ProductModalComponent implements OnInit {
       return;
     }
 
-    this.product = { ...this.product, ...this.productForm.value };
+    this.modalData.product = { ...this.modalData.product, ...this.productForm.value };
 
-    this.productForm.setValue(this.product);
-    this.saveChanges.emit(this.product);
+    this.productForm.setValue(this.modalData.product);
+    this.saveChanges.emit(this.modalData.product);
     this.activeModal.close();
   }
 
@@ -68,7 +68,7 @@ export class ProductModalComponent implements OnInit {
   private createProductFormBuilder() {
     this.productForm = this.formBuilder.group({
       productId: [0],
-      categoryId: [0],
+      categoryId: ['', Validators.required],
       productReview: [''],
       productLike: [false, Validators.required],
       productImageUrl: ['', Validators.required],
@@ -83,17 +83,17 @@ export class ProductModalComponent implements OnInit {
 
   private patchProductValues() {
     this.productForm.patchValue({
-      productReview: this.product.productReview,
-      productLike: this.product.productLike,
-      productImageUrl: this.product.productImageUrl,
-      locationId: this.product.locationId,
-      productInStock: this.product.productInStock,
-      productRating: this.product.productRating,
-      productTitle: this.product.productTitle,
-      productDescription: this.product.productDescription,
-      productPrice: this.product.productPrice,
-      productId: this.product.productId,
-      categoryId: this.product.categoryId,
+      productReview: this.modalData.product.productReview,
+      productLike: this.modalData.product.productLike,
+      productImageUrl: this.modalData.product.productImageUrl,
+      locationId: this.modalData.product.locationId,
+      productInStock: this.modalData.product.productInStock,
+      productRating: this.modalData.product.productRating,
+      productTitle: this.modalData.product.productTitle,
+      productDescription: this.modalData.product.productDescription,
+      productPrice: this.modalData.product.productPrice,
+      productId: this.modalData.product.productId,
+      categoryId: this.modalData.product.categoryId,
     });
   }
 }
