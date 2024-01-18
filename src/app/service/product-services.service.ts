@@ -64,7 +64,6 @@ export class ProductService {
       this.productMatchesSearchTerm(product, term)
     );
 
-    cachedProducts.length = 0;
     if (cachedProducts.length > 0) {
       return of(cachedProducts);
     } else {
