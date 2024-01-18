@@ -21,7 +21,14 @@ export class ProductTrashComponent implements OnInit {
   }
 
   restoreProduct(product: ProductViewModel) {
-    this.productService.restoreTrashProduct(product).subscribe()
+    const modalRef = this.modalService.open(ConfirmationModalComponent, {
+      size: 'md'
+    });
+
+    modalRef.componentInstance.modalData = { message: 'restore', value: product };
+    modalRef.componentInstance.saveChanges.subscribe((id: number) => {
+      this.productService.restoreTrashProduct(product).subscribe()
+    });
   }
 
   removeProduct(id: number) {
