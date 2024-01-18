@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'product-management';
+  title = 'walsh-product-management';
   sidebarExpanded = true;
 }

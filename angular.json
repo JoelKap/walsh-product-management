@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "product-management": {
+    "walsh-product-management": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/product-management",
+            "outputPath": "dist/walsh-product-management",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "product-management:build:production"
+              "buildTarget": "walsh-walsh-product-management:build:production"
             },
             "development": {
-              "buildTarget": "product-management:build:development"
+              "buildTarget": "walsh-product-management:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -77,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "product-management:build"
+            "buildTarget": "walsh-product-management:build"
           }
         },
         "test": {

@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'product-management'`, () => {
+  it(`should have as title 'walsh-product-management'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('product-management');
+    expect(app.title).toEqual('walsh-product-management');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('product-management app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('walsh-product-management app is running!');
   });
 });
