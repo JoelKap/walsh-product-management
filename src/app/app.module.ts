@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductAddUpdateComponent } from './product-add-update/product-add-update.component';
 import { ProductTrashComponent } from './product-trash/product-trash.component';
 import { ProductGlobalSearchComponent } from './product-global-search/product-global-search.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -24,7 +23,6 @@ import { ProductModalComponent } from './product-modal/product-modal.component';
     AppComponent,
     ProductListComponent,
     ProductDetailComponent,
-    ProductAddUpdateComponent,
     ProductTrashComponent,
     ProductGlobalSearchComponent,
     SidebarComponent,
