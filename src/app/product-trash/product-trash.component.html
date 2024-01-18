@@ -3,8 +3,8 @@
         <div class="col-md-4 mb-4" *ngFor="let product of trashProducts$ | async">
             <div class="card bg-light text-white">
                 <img [src]="product.productImageUrl" class="card-img" alt="{{ product.productTitle }}">
-                <div class="ms-2">
-                    <h5 class="card-title" style="color: black;">
+                <div class="ms-2 p-2">
+                    <h5 class="card-title text-center" style="color: black;">
                         {{ product.productTitle }}</h5>
                 </div>
                 <div class="card-footer">
