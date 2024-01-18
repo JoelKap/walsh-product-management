@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
-import { ProductService } from '../service/product-services.service';
+import { ProductService } from '../service/product.service';
 import { ConfirmationModalComponent } from '../utils/confirmation-modal/confirmation-modal.component';
 
 @Component({

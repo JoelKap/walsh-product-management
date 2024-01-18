@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, OperatorFunction, catchError, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
-import { ProductService } from '../service/product-services.service';
+import { ProductService } from '../service/product.service';
 
 @Component({
   selector: 'app-product-global-search',

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
-import { ProductService } from '../service/product-services.service';
+import { ProductService } from '../service/product.service';
 import { ProductModalComponent } from '../product-modal/product-modal.component';
 import { CategoryService } from '../service/category.service';
 import { ProductCategoryViewModel } from '../viewModel/product-category.viewmodel';

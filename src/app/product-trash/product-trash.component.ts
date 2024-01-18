@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ProductService } from '../service/product-services.service';
+import { ProductService } from '../service/product.service';
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 import { ConfirmationModalComponent } from '../utils/confirmation-modal/confirmation-modal.component';
 
