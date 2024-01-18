@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, OperatorFunction, catchError, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
@@ -18,7 +19,8 @@ export class ProductGlobalSearchComponent implements OnInit {
   suggestions$: OperatorFunction<string, ProductViewModel[]> | null = null;
 
   constructor(private formBuilder: FormBuilder,
-    private productService: ProductService) { }
+              private toastr: ToastrService,
+              private productService: ProductService) { }
 
   ngOnInit() {
     this.createProductFormBuilder();
@@ -33,7 +35,10 @@ export class ProductGlobalSearchComponent implements OnInit {
         distinctUntilChanged(), // ignore if next search term is same as previous
         switchMap((term) =>
           this.productService.searchProducts(term).pipe(
-            catchError(() => of([])) //Todo::find a better way to handle the error
+            catchError(() => {
+              this.toastr.error("Error loading products", "Error")
+              return of([])
+            })
           )
         )
       );

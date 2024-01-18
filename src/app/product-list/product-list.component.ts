@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
@@ -12,8 +11,7 @@ import { ProductService } from '../service/product-services.service';
 export class ProductListComponent implements OnInit {
   products: ProductViewModel[] = [];
 
-  constructor(private router: Router,
-    private productService: ProductService) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.loadProducts();

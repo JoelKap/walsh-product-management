@@ -54,7 +54,7 @@ export class ProductDetailComponent implements OnInit {
     }
 
     modalRef.componentInstance.saveChanges.subscribe((product: ProductViewModel) => {
-      this.productService.addOrUpdateProduct(product).subscribe((res) => {});
+      this.productService.addOrUpdateProduct(product).subscribe(() => {});
     });
   }
 
@@ -66,8 +66,6 @@ export class ProductDetailComponent implements OnInit {
     this.categoryService.getCategories().subscribe((categories: ProductCategoryViewModel[]) => {
       if (categories.length) {
         this.categoryName = categories.find(category => category.categoryId === this.product?.categoryId)?.categoryName;
-      } {
-        //Todo://show notification
       }
     })
   }
@@ -76,8 +74,6 @@ export class ProductDetailComponent implements OnInit {
     this.locationService.getLocations().subscribe((locations: ProductLocationViewModel[]) => {
       if (locations.length) {
         this.locationName = locations.find(location => location.locationId === this.product?.locationId)?.locationName;
-      } {
-        //Todo://show notification
       }
     })
   }

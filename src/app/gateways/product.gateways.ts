@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 
@@ -11,7 +12,8 @@ export class ProductGateway {
     private apiUrl = 'https://localhost:7183/api/Product';
     private trashApiUrl = 'https://localhost:7183/api/Trash';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+                private toastr: ToastrService) { }
 
     getProducts(): Observable<ProductViewModel[]> {
         return this.http.get<ProductViewModel[]>(this.apiUrl);
@@ -46,7 +48,7 @@ export class ProductGateway {
         return this.http.delete(url).pipe(
             map(() => true),
             catchError(() => {
-                //Todo:://Need notification
+                this.toastr.error("Product was not deleted, please again", "Error")
                 return of(false);
             })
         );
@@ -67,7 +69,7 @@ export class ProductGateway {
         return this.http.delete(url).pipe(
             map(() => true),
             catchError(() => {
-                //Todo:://Need notification
+                this.toastr.error("Trash product was not deleted, please again", "Error")
                 return of(false);
             })
         );

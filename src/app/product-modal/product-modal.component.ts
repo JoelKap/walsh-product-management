@@ -53,8 +53,6 @@ export class ProductModalComponent implements OnInit {
     this.categoryService.getCategories().subscribe((categories: ProductCategoryViewModel[]) => {
       if (categories.length) {
         this.categories = categories;
-      } {
-        //Todo://show notification
       }
     })
   }
@@ -63,8 +61,6 @@ export class ProductModalComponent implements OnInit {
     this.locationService.getLocations().subscribe((locations: ProductLocationViewModel[]) => {
       if (locations.length) {
         this.locations = locations;
-      } {
-        //Todo://show notification
       }
     })
   }

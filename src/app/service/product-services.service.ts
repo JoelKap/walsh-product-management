@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, catchError, filter, of, switchMap, tap } f
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 import { ProductGateway } from '../gateways/product.gateways';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class ProductService {
   private products: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
   trashProducts: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
 
-  constructor(private productGateway: ProductGateway) { }
+  constructor(private toastr: ToastrService,
+              private productGateway: ProductGateway) { }
 
   getProducts(): Observable<ProductViewModel[]> {
     if (this.products.value.length) {
@@ -21,9 +23,8 @@ export class ProductService {
         tap((products: ProductViewModel[]) => {
           this.products.next([...this.products.value, ...products]);
         }),
-        catchError(error => {
-          //Todo:Need to load a notification
-          //console.error('Error loading products', error);
+        catchError(() => {
+          this.toastr.error("Error loading products", "Error")
           return of([]);
         })
       );
@@ -42,9 +43,8 @@ export class ProductService {
         tap((product: ProductViewModel) => {
           this.products.next([...this.products.value, product]);
         }),
-        catchError((error) => {
-          // Todo: Handle error, e.g., show notification
-          console.error(`Error loading product with productId ${productId}`, error);
+        catchError(() => {
+          this.toastr.error("Error loading product", "Error")
           return of(null);
         })
       );
@@ -84,9 +84,8 @@ export class ProductService {
       tap((product: ProductViewModel) => {
         this.products.next([...this.products.value, product]);
       }),
-      catchError((error) => {
-        // Todo: Handle error, e.g., show notification
-        console.error(`Error loading product with productId`, error);
+      catchError(() => {
+        this.toastr.error("Error updating product", "Error")
         return of(null);
       })
     );
@@ -115,9 +114,8 @@ export class ProductService {
         tap((trashProducts: ProductViewModel[]) => {
           this.trashProducts.next([...this.trashProducts.value, ...trashProducts]);
         }),
-        catchError(error => {
-          //Todo:Need to load a notification
-          //console.error('Error loading products', error);
+        catchError(() => {
+          this.toastr.error("Error loading trash products", "Error")
           return of([]);
         })
       );

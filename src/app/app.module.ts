@@ -4,6 +4,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +39,9 @@ import { ProductModalComponent } from './product-modal/product-modal.component';
     NgbModule,
     FormsModule,
 		ReactiveFormsModule,
+    CommonModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
