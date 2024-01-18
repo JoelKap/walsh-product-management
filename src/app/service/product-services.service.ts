@@ -169,7 +169,6 @@ export class ProductService {
     return (
       product.productTitle.toLowerCase().includes(term.toLowerCase()) ||
       product.productDescription.toLowerCase().includes(term.toLowerCase()) ||
-      product.productRating?.toString() === term ||
       product.productPrice.toString() == term
     );
   }
