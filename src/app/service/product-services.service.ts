@@ -146,6 +146,27 @@ export class ProductService {
     );
   }
 
+  removeTrashProduct(id: number) {
+    return this.productGateway.removeTrashProduct(id).pipe(
+      tap((result: boolean) => {
+        if (result) {
+          const cachedProductIndex = this.trashProducts.value.findIndex(product => product.productId === id);
+          if (cachedProductIndex !== -1) {
+            const updatedTrashProducts = [
+              ...this.trashProducts.value.slice(0, cachedProductIndex),
+              ...this.trashProducts.value.slice(cachedProductIndex + 1)
+            ];
+            this.trashProducts.next(updatedTrashProducts);
+          }
+        }
+      }),
+      catchError((error) => {
+        console.error(`Error restoring product with productId`, error);
+        return of(false);
+      })
+    );
+  }
+
 
   private productMatchesSearchTerm(product: ProductViewModel, term: string): boolean {
     return (

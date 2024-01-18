@@ -44,9 +44,9 @@ export class ProductGateway {
     removeProduct(productId: number): Observable<boolean> {
         const url = `${this.apiUrl}/${productId}`;
         return this.http.delete(url).pipe(
-            map(() => true), // Map the successful response to true
+            map(() => true),
             catchError(() => {
-                // Handle errors if needed
+                //Todo:://Need notification
                 return of(false);
             })
         );
@@ -59,5 +59,17 @@ export class ProductGateway {
     restoreTrashProduct(product: ProductViewModel): Observable<boolean> {
         const url = `${this.trashApiUrl}/RestoreProduct`;
         return this.http.put<boolean>(url, product);
+    }
+
+    removeTrashProduct(productId: number) {
+        debugger;
+        const url = `${this.trashApiUrl}/${productId}`;
+        return this.http.delete(url).pipe(
+            map(() => true),
+            catchError(() => {
+                //Todo:://Need notification
+                return of(false);
+            })
+        );
     }
 }

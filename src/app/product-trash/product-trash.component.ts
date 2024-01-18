@@ -22,7 +22,7 @@ export class ProductTrashComponent implements OnInit {
   }
 
   removeProduct(id: number) {
-    debugger;
+    this.productService.removeTrashProduct(id).subscribe();
   }
 
   private loadTrashes() {
