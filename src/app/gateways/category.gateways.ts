@@ -8,7 +8,7 @@ import { ProductCategoryViewModel } from '../viewModel/product-category.viewmode
     providedIn: 'root'
 })
 export class CategoryGateway {
-    private apiUrl = 'https://localhost:7183/api/Category';
+    private apiUrl = 'https://localhost:7183/api/ProductCategory';
 
     constructor(private http: HttpClient) { }
 

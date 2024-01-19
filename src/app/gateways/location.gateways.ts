@@ -8,7 +8,7 @@ import { ProductLocationViewModel } from '../viewModel/product-location.viewmode
     providedIn: 'root'
 })
 export class LocationGateway {
-    private apiUrl = 'https://localhost:7183/api/Location';
+    private apiUrl = 'https://localhost:7183/api/ProductLocation';
 
     constructor(private http: HttpClient) { }
 
