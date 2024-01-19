@@ -1,3 +1,5 @@
+import { ProductStockViewModel } from "./product-stock.viewmodel";
+
 export class ProductViewModel {
     productId!: number;
     categoryId!: number;
@@ -10,4 +12,6 @@ export class ProductViewModel {
     productImageUrl? : string;
     productDescription!: string;
     productLike: boolean = false;
+    stock!: ProductStockViewModel;
+    reviews!: ProductStockViewModel[]
   }
