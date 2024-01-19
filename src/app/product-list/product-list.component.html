@@ -1,12 +1,21 @@
-<div class="row">
-  <div class="col-md-12">
-    <app-product-global-search (input)="searchProducts($event)"></app-product-global-search>
-  </div>
-</div>
 <div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <app-product-global-search (input)="searchProducts($event)"></app-product-global-search>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-md-4 mb-4" *ngFor="let product of products">
       <app-product [product]="product"></app-product>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-end fixed-bottom mb-4">
+        <button class="btn btn-primary" (click)="addProduct()">Add product</button>
+      </div>
     </div>
   </div>
 </div>
