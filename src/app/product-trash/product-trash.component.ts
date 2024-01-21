@@ -26,7 +26,7 @@ export class ProductTrashComponent implements OnInit {
     });
 
     modalRef.componentInstance.modalData = { message: 'restore', value: product };
-    modalRef.componentInstance.saveChanges.subscribe((id: number) => {
+    modalRef.componentInstance.saveChanges.subscribe((product: ProductViewModel) => {
       this.productService.restoreTrashProduct(product).subscribe()
     });
   }

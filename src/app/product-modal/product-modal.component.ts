@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
-import { touchAllFormFields } from '../utils/validation';
 import { ProductCategoryViewModel } from '../viewModel/product-category.viewmodel';
 import { CategoryService } from '../service/category.service';
 import { LocationService } from '../service/location.service';
@@ -37,15 +36,17 @@ export class ProductModalComponent implements OnInit {
   }
 
   onSaveChanges() {
-    if (!this.productForm.valid) {
-      touchAllFormFields(this.productForm);
-      return;
+    const productData = this.productForm.value;
+    const reviewsArray: any[] = [];
+    reviewsArray.push(productData.reviews);
+
+    productData.reviews = reviewsArray;
+    if (productData.productId == undefined || productData.productId < 0) {
+      productData.categoryId = Number(this.productForm.value.categoryId);
+      productData.locationId = Number(this.productForm.value.locationId);
     }
 
-    this.modalData.product = { ...this.modalData.product, ...this.productForm.value };
-
-    this.productForm.setValue(this.modalData.product);
-    this.saveChanges.emit(this.modalData.product);
+    this.saveChanges.emit(productData);
     this.activeModal.close();
   }
 
@@ -68,32 +69,46 @@ export class ProductModalComponent implements OnInit {
   private createProductFormBuilder() {
     this.productForm = this.formBuilder.group({
       productId: [0],
-      categoryId: ['', Validators.required],
-      productReview: [''],
+      categoryId: [0, Validators.required],
       productLike: [false, Validators.required],
       productImageUrl: ['', Validators.required],
-      locationId: ['', Validators.required],
-      productInStock: ['IN', Validators.required],
-      productRating: [1, [Validators.min(1), Validators.max(5)]],
+      locationId: [0, Validators.required],
       productTitle: ['', [Validators.required, Validators.maxLength(50)]],
       productDescription: ['', [Validators.required, Validators.minLength(150)]],
       productPrice: [0, [Validators.required, Validators.min(0), Validators.max(1000)]],
+      isDeleted: [false],
+      createdAt: [new Date()],
+      updateAt: [new Date()],
+      reviews: this.formBuilder.group({
+        reviewId: [0],
+        productId: [0],
+        productRating: [''],
+        productReviewDescription: ['Demo'],
+        isDeleted: [false],
+        createdAt: [new Date()],
+        updateAt: [new Date()],
+      }),
+      stock: this.formBuilder.group({
+        stockId: [0],
+        productInStock: ['IN'],
+        isDeleted: [false],
+        createdAt: [new Date()],
+        updateAt: [new Date()],
+      }),
     });
   }
 
   private patchProductValues() {
-    this.productForm.patchValue({
-      productReview: this.modalData.product.productReview,
-      productLike: this.modalData.product.productLike,
-      productImageUrl: this.modalData.product.productImageUrl,
-      locationId: this.modalData.product.locationId,
-      productInStock: this.modalData.product.productInStock,
-      productRating: this.modalData.product.productRating,
-      productTitle: this.modalData.product.productTitle,
-      productDescription: this.modalData.product.productDescription,
-      productPrice: this.modalData.product.productPrice,
-      productId: this.modalData.product.productId,
-      categoryId: this.modalData.product.categoryId,
-    });
+    const { product } = this.modalData;
+
+    if (product) {
+      const { reviews, stock, ...restProduct } = product;
+
+      this.productForm.patchValue({
+        ...restProduct,
+        reviews: reviews && reviews.length > 0 ? reviews[0] : null,
+        stock: stock || null,
+      });
+    }
   }
 }

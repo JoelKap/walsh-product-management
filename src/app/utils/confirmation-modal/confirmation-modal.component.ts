@@ -12,8 +12,6 @@ import { ProductViewModel } from 'src/app/viewModel/product.viewmodel';
 })
 export class ConfirmationModalComponent {
   @Input() modalData !: any;
-  @Input() title: string = '';
-
   @Output() saveChanges = new EventEmitter<ProductViewModel>();
 
   constructor(public activeModal: NgbActiveModal) {}

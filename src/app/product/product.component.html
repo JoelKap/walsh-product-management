@@ -10,13 +10,13 @@
                 </div>
                 <div class="row p-2">
                     <div class="col-md-7">
-                        <a href="#" (click)="likeOrUnlikeProduct(product)">
+                        <a class="button" (click)="likeOrUnlikeProduct(product)">
                             <fa-icon [icon]="faThumbsUp" [ngClass]="{'liked': !product.productLike}"></fa-icon>
                         </a>
                     </div>
                     <div class="col-md-5">
                         <label style="padding-left: 45px;">in stock:</label>
-                        <small class="ms-1">{{ product.productInStock }}</small>
+                        <small class="ms-1">{{ product.stock.productInStock }}</small>
                     </div>
                 </div>
                 <div class="card-footer">

@@ -4,14 +4,14 @@
             <button class="btn btn-primary back-button" (click)="goBack()">
                 <fa-icon [icon]="faArrowLeft"></fa-icon> Back
             </button>
-            <img [src]="product?.productImageUrl" class="img-fluid rounded-start" alt="product?.productTitle">
+            <img [src]="product.productImageUrl" class="img-fluid rounded-start" alt="product.productTitle">
         </div>
         <div class="card mb-3 product-content-container">
             <div class="card-body">
-                <h5 class="card-title">{{ product?.productTitle }}</h5>
+                <h5 class="card-title">{{ product.productTitle }}</h5>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="card-text">{{ product?.productDescription }}</p>
+                        <p class="card-text">{{ product.productDescription }}</p>
                     </div>
                 </div>
                 <br />
@@ -28,7 +28,9 @@
                         <label>Rating:</label>
                     </div>
                     <div class="col-md-9">
-                        <p class="card-text"><small class="text-muted">{{ product?.productRating }}</small></p>
+                        <p class="card-text">
+                            <small class="text-muted">{{ product.reviews[0].productRating }}</small>
+                        </p>
                     </div>
                 </div>
                 <div class="row">
@@ -36,7 +38,7 @@
                         <label>Price:</label>
                     </div>
                     <div class="col-md-9">
-                        <p class="card-text"><small class="text-muted">{{ product?.productPrice }}</small></p>
+                        <p class="card-text"><small class="text-muted">{{ product.productPrice }}</small></p>
                     </div>
                 </div>
                 <div class="row">
@@ -52,25 +54,14 @@
                         <label>Review:</label>
                     </div>
                     <div class="col-md-9">
-                        <p class="card-text"><small class="text-muted">{{ product?.productReview }}</small></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label>Last updated:</label>
-                    </div>
-                    <div class="col-md-9">
-                        <p class="card-text"><small class="text-muted">3 mins ago</small></p>
+                        <p class="card-text"><small class="text-muted">{{ product.reviews[0].productReviewDescription }}</small></p>
                     </div>
                 </div>
                 <hr />
                 <div class="row">
                     <div class="col-md-12">
                         <div class="float-end">
-                            <button class="btn btn-primary" (click)="addOrUpdate('add')">Add</button>
-                        </div>
-                        <div class="float-start">
-                            <button class="btn btn-secondary" (click)="addOrUpdate('update')">Edit</button>
+                            <button class="btn btn-primary" (click)="edit()">Edit</button>
                         </div>
                     </div>
                 </div>

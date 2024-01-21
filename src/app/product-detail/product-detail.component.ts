@@ -20,7 +20,7 @@ export class ProductDetailComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   categoryName!: string | undefined;
   locationName!: string | undefined;
-  product!: ProductViewModel | null;
+  product!: ProductViewModel;
 
   constructor(private route: ActivatedRoute,
     private modalService: NgbModal,
@@ -40,23 +40,18 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  addOrUpdate(action: string) {
+  edit() {
     const modalRef = this.modalService.open(ProductModalComponent, {
       size: 'lg'
     });
 
-    if (action !== 'add') {
-      modalRef.componentInstance.modalData = { message: 'Update', product: this.product };
-    } else {
-      const newProduct = new ProductViewModel();
-      newProduct.productId = 0;
-      newProduct.productReview = '';
-      newProduct.productInStock = "IN";
-      modalRef.componentInstance.modalData = { message: 'Add', product: newProduct };
-    }
-
+    modalRef.componentInstance.modalData = { message: 'Update', product: this.product };
     modalRef.componentInstance.saveChanges.subscribe((product: ProductViewModel) => {
-      this.productService.addOrUpdateProduct(product).subscribe(() => { });
+      this.productService.editProduct(product).subscribe((product) => {
+        this.product = product;
+        this.getCategories();
+        this.getLocations();
+      });
     });
   }
 

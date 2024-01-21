@@ -28,10 +28,7 @@ export class ProductComponent {
 
   likeOrUnlikeProduct(product: ProductViewModel) {
     product.productLike = !product.productLike;
-
-    this.productService.likeOrUnlikeProduct(product).subscribe((result) => {
-      product.productLike = !result?.productLike;
-    })
+    this.productService.likeOrUnlikeProduct(product).subscribe();
   }
 
   removeProduct(id: number) {

@@ -1,3 +1,4 @@
+import { ProductReviewViewModel } from "./product-review.model";
 import { ProductStockViewModel } from "./product-stock.viewmodel";
 
 export class ProductViewModel {
@@ -13,5 +14,5 @@ export class ProductViewModel {
     productDescription!: string;
     productLike: boolean = false;
     stock!: ProductStockViewModel;
-    reviews!: ProductStockViewModel[]
+    reviews!: ProductReviewViewModel[]
   }

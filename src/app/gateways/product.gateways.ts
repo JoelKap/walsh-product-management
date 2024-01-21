@@ -48,13 +48,13 @@ export class ProductGateway {
         return this.http.delete(url).pipe(
             map(() => true),
             catchError(() => {
-                this.toastr.error("Product was not deleted, please again", "Error")
+                console.error(`Error deleting product`, 'Error');
                 return of(false);
             })
         );
     }
 
-    getTrashProducts() {
+    getTrashProducts(): Observable<ProductViewModel[]> {
         return this.http.get<ProductViewModel[]>(this.trashApiUrl);
     }
 
@@ -64,12 +64,11 @@ export class ProductGateway {
     }
 
     removeTrashProduct(productId: number) {
-        debugger;
         const url = `${this.trashApiUrl}/${productId}`;
         return this.http.delete(url).pipe(
             map(() => true),
             catchError(() => {
-                this.toastr.error("Trash product was not deleted, please again", "Error")
+                console.error(`Error deleting product`, 'Error');
                 return of(false);
             })
         );

@@ -12,9 +12,10 @@ import { ProductModalComponent } from '../product-modal/product-modal.component'
 })
 export class ProductListComponent implements OnInit {
   products: ProductViewModel[] = [];
+  products$ = this.productService.products;
 
   constructor(private modalService: NgbModal,
-    private productService: ProductService) { }
+    private productService: ProductService) {}
 
   ngOnInit() {
     this.loadProducts();
@@ -23,9 +24,15 @@ export class ProductListComponent implements OnInit {
   searchProducts(value: any) {
     if (value.data) {
       const term = value.data.trim();
-      this.productService.searchProducts(term).subscribe((searchResults) => {
-        this.products = searchResults;
-      });
+      this.productService.searchProducts(term).subscribe(
+        (products: ProductViewModel[]) => {
+          this.products$.next(products);
+          this.productService.productCount$.next(this.products$.value.length);
+          if (this.productService.productsCount !== this.products$.value.length) {
+            this.productService.isProductLengthChanged$.next(true);
+          }
+        }
+      );
     } else {
       this.loadProducts();
     }
@@ -42,14 +49,12 @@ export class ProductListComponent implements OnInit {
     newProduct.productInStock = "IN";
     modalRef.componentInstance.modalData = { message: 'Add', product: newProduct };
 
-
     modalRef.componentInstance.saveChanges.subscribe((product: ProductViewModel) => {
-      this.productService.addOrUpdateProduct(product).subscribe(() => { });
+      this.productService.addProduct(product).subscribe();
     });
   }
 
-
   private loadProducts() {
-    this.productService.getProducts().subscribe((products) => (this.products = products));
+    this.productService.getProducts().subscribe();
   }
 }
