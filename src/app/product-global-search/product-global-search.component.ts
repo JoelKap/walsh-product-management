@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, OperatorFunction, catchError, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
 import { ProductService } from '../service/product.service';
@@ -12,41 +9,20 @@ import { ProductService } from '../service/product.service';
   templateUrl: './product-global-search.component.html',
   styleUrls: ['./product-global-search.component.css']
 })
-export class ProductGlobalSearchComponent implements OnInit {
-  searchForm!: FormGroup;
+export class ProductGlobalSearchComponent {
   faSearch = faSearch;
+  searchTerm: string = '';
 
-  suggestions$: OperatorFunction<string, ProductViewModel[]> | null = null;
+  constructor(private productService: ProductService) { }
 
-  constructor(private formBuilder: FormBuilder,
-              private toastr: ToastrService,
-              private productService: ProductService) { }
-
-  ngOnInit() {
-    this.createProductFormBuilder();
-    this.setupTypeahead();
-  }
-
-  private setupTypeahead(): void {
-    // Use debounceTime, distinctUntilChanged, and switchMap to control the frequency of API requests
-    this.suggestions$ = (text$: Observable<string>) =>
-      text$.pipe(
-        debounceTime(200), // wait 200ms after each keystroke before considering the term
-        distinctUntilChanged(), // ignore if next search term is same as previous
-        switchMap((term) =>
-          this.productService.searchProducts(term).pipe(
-            catchError(() => {
-              this.toastr.error("Error loading products", "Error")
-              return of([])
-            })
-          )
-        )
-      );
-  }
-
-  private createProductFormBuilder() {
-    this.searchForm = this.formBuilder.group({
-      searchStr: [''],
-    });
+  handleSearchInput(): void {
+    this.productService.searchProducts(this.searchTerm).subscribe(
+      (products: ProductViewModel[]) => {
+        this.productService.productCount$.next(products.length);
+        if (this.productService.productsCount !== products.length) {
+          this.productService.isProductLengthChanged$.next(true);
+        }
+      }
+    );
   }
 }

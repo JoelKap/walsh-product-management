@@ -11,31 +11,16 @@ import { ProductModalComponent } from '../product-modal/product-modal.component'
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+  searchTimer: any;
+  searchTerm: string = '';
   products: ProductViewModel[] = [];
   products$ = this.productService.products;
 
   constructor(private modalService: NgbModal,
-    private productService: ProductService) {}
+    private productService: ProductService) { }
 
   ngOnInit() {
     this.loadProducts();
-  }
-
-  searchProducts(value: any) {
-    if (value.data) {
-      const term = value.data.trim();
-      this.productService.searchProducts(term).subscribe(
-        (products: ProductViewModel[]) => {
-          this.products$.next(products);
-          this.productService.productCount$.next(this.products$.value.length);
-          if (this.productService.productsCount !== this.products$.value.length) {
-            this.productService.isProductLengthChanged$.next(true);
-          }
-        }
-      );
-    } else {
-      this.loadProducts();
-    }
   }
 
   addProduct() {

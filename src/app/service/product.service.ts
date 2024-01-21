@@ -14,6 +14,7 @@ export class ProductService {
   trashProducts: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
   productCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   isProductLengthChanged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private originalProducts: BehaviorSubject<ProductViewModel[]> = new BehaviorSubject<ProductViewModel[]>([]);
 
   constructor(private toastr: ToastrService,
     private productGateway: ProductGateway) { }
@@ -24,6 +25,8 @@ export class ProductService {
     } else {
       return this.productGateway.getProducts().pipe(
         tap((products: ProductViewModel[]) => {
+          this.products.next([]);
+          this.originalProducts.next([...products]);
           this.products.next([...this.products.value, ...products]);
           this.productsCount = products.length;
         }),
@@ -45,6 +48,7 @@ export class ProductService {
       return this.productGateway.getProductById(productId).pipe(
         filter((product: ProductViewModel | null): product is ProductViewModel => product !== null),
         tap((product: ProductViewModel) => {
+          this.products.next([]);
           this.products.next([...this.products.value, product]);
         }),
         catchError(() => {
@@ -64,8 +68,8 @@ export class ProductService {
         const updatedProducts = [...this.products.value];
         updatedProducts[existingProductIndex] = newProduct;
         this.products.next(updatedProducts);
+        
         this.toastr.success('Product updated successfully', 'Success');
-
       }),
       catchError((error) => {
         this.toastr.error('Error adding product', 'Error');
@@ -88,15 +92,19 @@ export class ProductService {
   }
 
   searchProducts(term: string) {
-    const cachedProducts = this.products.value.filter(product =>
-      this.productMatchesSearchTerm(product, term)
-    );
+    if (this.originalProducts.value.length === 0) {
+      this.originalProducts.next([...this.products.value]);
+    }
+
+    const cachedProducts = this.originalProducts.value.filter(product => this.productMatchesSearchTerm(product, term));
 
     if (cachedProducts.length > 0) {
+      this.products.next(cachedProducts);
       return of(cachedProducts);
     } else {
       return this.productGateway.searchProducts(term).pipe(
         tap((products: ProductViewModel[]) => {
+          this.products.next([]);
           this.products.next([...this.products.value, ...products]);
         }),
         catchError(error => {
@@ -206,7 +214,7 @@ export class ProductService {
   filter(id: number): Observable<any> {
     const products = this.products.value.filter(product => this.productMatchByLocations(product, id));
     this.products.next([...products])
-    return of(this.products);           
+    return of(this.products);
   }
 
   private productMatchByLocations(product: ProductViewModel, locationId: number): boolean {
