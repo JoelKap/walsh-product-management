@@ -1,11 +1,11 @@
 <form [formGroup]="searchForm">
     <section class="header-main border-bottom bg-white">
         <div class="container-fluid">
-            <div class="row p-2 pt-3 pb-3 d-flex align-items-center">
-                <div class="col-md-12">
+            <div class="row p-2 pt-3 pb-3 d-flex align-items-center justify-content-end">
+                <div class="col-md-4">
                     <div class="d-flex form-inputs">
                         <input class="form-control" formControlName="searchStr" type="text"
-                            placeholder="Search product..." aria-autocomplete="list" [ngbTypeahead]="null"/>
+                            placeholder="Search product..." aria-autocomplete="list" [ngbTypeahead]="null" />
                         <i class="bi bi-search"></i>
                     </div>
                 </div>
@@ -13,4 +13,3 @@
         </div>
     </section>
 </form>
-
