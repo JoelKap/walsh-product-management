@@ -17,6 +17,7 @@ import { ProductGlobalSearchComponent } from './product-global-search/product-gl
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProductComponent } from './product/product.component';
 import { ProductModalComponent } from './product-modal/product-modal.component';
+import { GlobalFilterComponent } from './global-filter/global-filter.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProductModalComponent } from './product-modal/product-modal.component';
     ProductGlobalSearchComponent,
     SidebarComponent,
     ProductComponent,
-    ProductModalComponent
+    ProductModalComponent,
+    GlobalFilterComponent
   ],
   imports: [
     BrowserModule,

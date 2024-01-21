@@ -203,6 +203,19 @@ export class ProductService {
     );
   }
 
+  filter(id: number): Observable<any> {
+    const products = this.products.value.filter(product => this.productMatchByLocations(product, id));
+    this.products.next([...products])
+    return of(this.products);           
+  }
+
+  private productMatchByLocations(product: ProductViewModel, locationId: number): boolean {
+    return (
+      product.locationId.toString() == locationId.toString() ||
+      false
+    );
+  }
+
   private productMatchesSearchTerm(product: ProductViewModel, term: string): boolean {
     return (
       product.productTitle.toLowerCase().includes(term.toLowerCase()) ||
