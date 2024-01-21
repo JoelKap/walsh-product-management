@@ -64,6 +64,8 @@ export class ProductService {
         const updatedProducts = [...this.products.value];
         updatedProducts[existingProductIndex] = newProduct;
         this.products.next(updatedProducts);
+        this.toastr.success('Product updated successfully', 'Success');
+
       }),
       catchError((error) => {
         this.toastr.error('Error adding product', 'Error');
