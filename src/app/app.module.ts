@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { TitleStrategy } from '@angular/router';
+import { TemplatePageTitleStrategy } from './utils/page-title.strategy';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,12 +40,15 @@ import { GlobalFilterComponent } from './global-filter/global-filter.component';
     FontAwesomeModule,
     NgbModule,
     FormsModule,
-		ReactiveFormsModule,
+    ReactiveFormsModule,
     CommonModule,
-    BrowserAnimationsModule, 
+    BrowserAnimationsModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [{
+    provide: TitleStrategy,
+    useClass: TemplatePageTitleStrategy
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
