@@ -4,16 +4,19 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { ProductViewModel } from '../viewModel/product.viewmodel';
+import { environment } from 'src/environments/environment.development';
+
+const BACKEND_URL = environment.apiUrl;
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductGateway {
-    private apiUrl = 'https://localhost:7183/api/Product';
-    private trashApiUrl = 'https://localhost:7183/api/Trash';
+    private apiUrl = `${BACKEND_URL}/Product`;
+    private trashApiUrl = `${BACKEND_URL}/Trash`;
 
     constructor(private http: HttpClient,
-                private toastr: ToastrService) { }
+        private toastr: ToastrService) { }
 
     getProducts(): Observable<ProductViewModel[]> {
         return this.http.get<ProductViewModel[]>(this.apiUrl);
