@@ -15,8 +15,6 @@ import { ProductLocationViewModel } from '../viewModel/product-location.viewmode
 })
 export class ProductModalComponent implements OnInit {
   @Input() modalData!: any;
-  @Input() title: string = '';
-
   @Output() saveChanges = new EventEmitter<ProductViewModel>();
 
   productForm!: FormGroup;
@@ -46,6 +44,10 @@ export class ProductModalComponent implements OnInit {
       productData.locationId = Number(this.productForm.value.locationId);
     }
 
+    if (!this.validateLocationAndCategory()) {
+      return;
+    }
+
     this.saveChanges.emit(productData);
     this.activeModal.close();
   }
@@ -71,7 +73,7 @@ export class ProductModalComponent implements OnInit {
       productId: [0],
       categoryId: [0, Validators.required],
       productLike: [false, Validators.required],
-      productImageUrl: ['', Validators.required],
+      productImageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/\S+/)]],
       locationId: [0, Validators.required],
       productTitle: ['', [Validators.required, Validators.maxLength(50)]],
       productDescription: ['', [Validators.required, Validators.minLength(150)]],
@@ -97,6 +99,37 @@ export class ProductModalComponent implements OnInit {
       }),
     });
   }
+
+  shouldShowError(controlName: string): boolean {
+    const control = this.productForm.get(controlName);
+    return control ? (control.touched || control.dirty) && control.invalid : false;
+  }
+  
+  isInvalid(controlName: string): boolean {
+    const control = this.productForm.get(controlName);
+    return control ? (control.touched || control.dirty) && control.invalid : false;
+  }
+
+  private validateLocationAndCategory(): boolean {
+    const locationIdControl = this.productForm.get('locationId');
+    const categoryIdControl = this.productForm.get('categoryId');
+  
+    locationIdControl?.markAsTouched();
+    categoryIdControl?.markAsTouched();
+  
+    const locationId = locationIdControl?.value;
+    const categoryId = categoryIdControl?.value;
+  
+    if (!locationId || locationId <= 0 || !categoryId || categoryId <= 0) {
+      locationIdControl?.setErrors({ required: true });
+      categoryIdControl?.setErrors({ required: true });
+  
+      return false;
+    }
+  
+    return true;
+  }
+  
 
   private patchProductValues() {
     const { product } = this.modalData;

@@ -7,43 +7,94 @@
         <div class="row">
             <div class="col-md-6 mb-6">
                 <label for="productTitle" class="form-label">Title</label>
-                <input type="text" class="form-control" maxlength="50" id="productTitle" formControlName="productTitle">
+                <div class="form-group" [class.is-invalid]="isInvalid('productTitle')">
+                    <input type="text" class="form-control" maxlength="50" id="productTitle"
+                        formControlName="productTitle">
+                    <div *ngIf="shouldShowError('productTitle')" class="invalid">
+                        <div *ngIf="productForm.get('productTitle')?.hasError('required')">Title is required</div>
+                        <div *ngIf="productForm.get('productTitle')?.hasError('maxlength')">Title must be max 50
+                            characters</div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 mb-3">
-                <label for="productImageUrl" class="form-label">Image Url</label>
-                <input type="text" class="form-control" id="productImageUrl" formControlName="productImageUrl">
+            <div class="col-md-6 mb-6">
+                <label for="productTitle" class="form-label">Image Url</label>
+                <div class="form-group" [class.is-invalid]="isInvalid('productImageUrl')">
+                    <input type="text" class="form-control" id="productImageUrl" formControlName="productImageUrl">
+                    <div *ngIf="shouldShowError('productImageUrl')" class="invalid">
+                        <div *ngIf="productForm.get('productImageUrl')?.hasError('required')">Image URL is required
+                        </div>
+                        <div *ngIf="productForm.get('productImageUrl')?.hasError('pattern')">Invalid URL format Please
+                            enter a valid URL starting with http:// or https://</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="mb-12">
             <label for="productDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="productDescription" formControlName="productDescription"></textarea>
+            <div class="form-group" [class.is-invalid]="isInvalid('productDescription')">
+                <textarea class="form-control" id="productDescription" formControlName="productDescription"></textarea>
+                <div *ngIf="shouldShowError('productDescription')" class="invalid">
+                    <div *ngIf="productForm.get('productDescription')?.hasError('required')">Description is required
+                    </div>
+                    <div *ngIf="productForm.get('productDescription')?.hasError('minlength')">Description must be at
+                        least 150 characters</div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="productPrice" class="form-label">Price</label>
-                <input type="number" min="0" max="1000" class="form-control" id="productPrice"
-                    formControlName="productPrice">
+                <div class="form-group" [class.is-invalid]="isInvalid('productPrice')">
+                    <input type="number" min="0" max="1000" class="form-control" id="productPrice"
+                        formControlName="productPrice">
+                    <div *ngIf="shouldShowError('productPrice')" class="invalid">
+                        <div *ngIf="productForm.get('productPrice')?.hasError('required')">Price is required</div>
+                        <div *ngIf="productForm.get('productPrice')?.hasError('min')">Price must be at least 0</div>
+                        <div *ngIf="productForm.get('productPrice')?.hasError('max')">Price must be at most 1000</div>
+                    </div>
+                </div>
             </div>
-            <div formGroupName="reviews" class=" col-md-6 mb-3">
+            <div formGroupName="reviews" class="col-md-6 mb-3">
                 <label for="productRating" class="form-label">Rating</label>
-                <input type="number" min="1" max="5" class="form-control" id="productRating"
-                    formControlName="productRating">
+                <div class="form-group" [class.is-invalid]="isInvalid('reviews.productRating')">
+                    <input type="number" min="1" max="5" class="form-control" id="productRating"
+                        formControlName="productRating">
+                    <div *ngIf="shouldShowError('reviews.productRating')" class="invalid">
+                        <div *ngIf="productForm.get('reviews.productRating')?.hasError('required')">Rating is required
+                        </div>
+                        <div *ngIf="productForm.get('reviews.productRating')?.hasError('min')">Rating must be at least 1
+                        </div>
+                        <div *ngIf="productForm.get('reviews.productRating')?.hasError('max')">Rating must be at most 5
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="locationId" class="form-label">Location</label>
-                <select class="form-select" id="locationId" formControlName="locationId">
-                    <option *ngFor="let location of locations" [value]="location.locationId">{{ location.locationName }}
-                    </option>
-                </select>
+                <div class="form-group" [class.is-invalid]="isInvalid('locationId')">
+                    <select class="form-select" id="locationId" formControlName="locationId">
+                        <option *ngFor="let location of locations" [value]="location.locationId">{{
+                            location.locationName }}</option>
+                    </select>
+                    <div *ngIf="shouldShowError('locationId')" class="invalid">
+                        <div *ngIf="productForm.get('locationId')?.hasError('required')">Location is required</div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="categoryId" class="form-label">Category</label>
-                <select class="form-select" id="categoryId" formControlName="categoryId">
-                    <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName
-                        }}</option>
-                </select>
+                <div class="form-group" [class.is-invalid]="isInvalid('categoryId')">
+                    <select class="form-select" id="categoryId" formControlName="categoryId">
+                        <option *ngFor="let category of categories" [value]="category.categoryId">{{
+                            category.categoryName }}</option>
+                    </select>
+                    <div *ngIf="shouldShowError('categoryId')" class="invalid">
+                        <div *ngIf="productForm.get('categoryId')?.hasError('required')">Category is required</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div formGroupName="stock">
@@ -66,5 +117,7 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSaveChanges()">{{modalData.message === 'Update'? 'Update': 'Save'}}</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveChanges()" [disabled]="productForm.invalid">
+        {{modalData.message === 'Update'? 'Update': 'Save'}}
+    </button>
 </div>
